@@ -1,6 +1,6 @@
 ﻿namespace EnergyCAP.Models
 {
-    public class Repos
+    public class Repo
     {
         public int Id { get; set; }
         public string Name { get; set; }

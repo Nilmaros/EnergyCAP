@@ -14,7 +14,7 @@ namespace EnergyCAP.Data
         {
         }
 
-        public DbSet<Repos> Repos { get; set; }
+        public DbSet<Repo> Repos { get; set; }
         public DbSet<UsernameRepos> UsernameRepos { get; set; }
     }
 }

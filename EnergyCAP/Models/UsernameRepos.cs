@@ -9,6 +9,6 @@ namespace EnergyCAP.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public virtual List<Repos> Repos { get; set; }
+        public virtual List<Repo> Repos { get; set; }
     }
 }
