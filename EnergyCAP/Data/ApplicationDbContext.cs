@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using EnergyCAP.Models;
 
 namespace EnergyCAP.Data
 {
@@ -12,5 +13,8 @@ namespace EnergyCAP.Data
             : base(options)
         {
         }
+
+        public DbSet<Repos> Repos { get; set; }
+        public DbSet<UsernameRepos> UsernameRepos { get; set; }
     }
 }
