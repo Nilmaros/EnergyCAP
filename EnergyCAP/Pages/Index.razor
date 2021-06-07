@@ -1,14 +1,83 @@
 ﻿@page "/"
+@using EnergyCAP.Data
+@inject RepoService repoService
+
 <AuthorizeView>
     <Authorized>
-        <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="Github Username">
+        <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="Github Username" @bind="username">
+        <p>@errorMessage</p>
         <br />
-        <button type="submit" class="btn btn-primary">Check Repos</button>
-        <button type="submit" class="btn btn-primary">Change username</button>
-        <button type="submit" class="btn btn-primary">Refresh</button>
+        <button type="submit" class="btn btn-primary" @onclick="FindReposForUsernameElseSearchGithub">Check Repos</button>
+        <button type="submit" class="btn btn-primary" @onclick="DeleteDatabaseEntriesAndUpdateFromGithub">Refresh</button>
+
+        @if (reposObj.Count == 0)
+        {
+            <p>no repos to display.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var repo in reposObj)
+                    {
+
+                        <tr>
+                            <td>@repo.Name</td>
+                            <td>@repo.Description</td>
+                            <td>@repo.Username</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
     </Authorized>
     <Authorizing>Please wait...</Authorizing>
     <NotAuthorized>
         Not Auth.
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    List<Repo> reposObj = new List<Repo>();
+    string username;
+    string errorMessage = "";
+
+    private async void FindReposForUsernameElseSearchGithub()
+    {
+        if (username is null || username == "")
+        {
+            errorMessage = "Username not filled.";
+        }
+        else
+        {
+            reposObj = await repoService.GetListReposAsync(username);
+            if (reposObj is null || reposObj.Count == 0)
+            {
+                reposObj = await repoService.GetListStarredReposFromGithubAsync(username);
+            }
+            StateHasChanged();
+        }
+    }
+
+    private async void DeleteDatabaseEntriesAndUpdateFromGithub()
+    {
+        if (username is null || username == "")
+        {
+            errorMessage = "Username not filled.";
+        }
+        else
+        {
+            await repoService.DeleteRepoAsync(username);
+            reposObj = await repoService.GetListStarredReposFromGithubAsync(username);
+            StateHasChanged();
+        }
+    }
+}

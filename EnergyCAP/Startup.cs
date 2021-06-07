@@ -44,15 +44,15 @@ namespace EnergyCAP
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<WeatherForecastService>();
             // Add GitHub authentication
             services.AddAuthentication(options => { })
                 .AddGitHub("Github", options =>
                 {
                     options.ClientId = "f1f34b088a50791c2a37"; // client id from registering github app
                     options.ClientSecret = "9228ad4864e128a71f60cced1a818d37e5197ed9"; // client secret from registering github app
-                    
                 });
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +70,7 @@ namespace EnergyCAP
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
