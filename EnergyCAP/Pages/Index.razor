@@ -22,17 +22,19 @@
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
                         <th scope="col">Username</th>
+                        <th scope="col">License</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var repo in reposObj)
                     {
 
-                        <tr>
-                            <td>@repo.Name</td>
-                            <td>@repo.Description</td>
-                            <td>@repo.Username</td>
-                        </tr>
+                    <tr>
+                        <td>@repo.Name</td>
+                        <td>@repo.Description</td>
+                        <td>@repo.Username</td>
+                        <td>@repo.License</td>
+                    </tr>
                     }
                 </tbody>
             </table>
