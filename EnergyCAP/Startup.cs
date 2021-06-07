@@ -39,8 +39,8 @@ namespace EnergyCAP
             services.AddAuthentication(options => { })
                 .AddGitHub("Github", options =>
                 {
-                    options.ClientId = Configuration["github:ClientId"]; // client id from registering github app
-                    options.ClientSecret = Configuration["github:ClientSecret"]; // client secret from registering github app
+                    options.ClientId = "f1f34b088a50791c2a37"; // client id from registering github app
+                    options.ClientSecret = "9228ad4864e128a71f60cced1a818d37e5197ed9"; // client secret from registering github app
                 });
 
             services.AddHttpClient();
