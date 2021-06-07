@@ -6,10 +6,11 @@ using EnergyCAP.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using EnergyCAP.Interfaces;
 
 namespace EnergyCAP.Data
 {
-    public class RepoService
+    public class RepoService : IRepoService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly HttpClient _httpClient;
@@ -91,7 +92,7 @@ namespace EnergyCAP.Data
                 repList.Add(repo);
                 await InsertRepoAsync(repo);
             }
-            
+
             return repList;
         }
     }

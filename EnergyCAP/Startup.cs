@@ -1,4 +1,5 @@
 using EnergyCAP.Areas.Identity;
+using EnergyCAP.Interfaces;
 using EnergyCAP.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -39,7 +40,7 @@ namespace EnergyCAP
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddScoped<RepoService>();
+            services.AddScoped<IRepoService, RepoService>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();

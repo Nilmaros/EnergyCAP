@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using EnergyCAP.Data
-@inject RepoService repoService
+@using EnergyCAP.Interfaces
+@inject IRepoService repoService
 
 <AuthorizeView>
     <Authorized>
@@ -29,12 +29,12 @@
                     @foreach (var repo in reposObj)
                     {
 
-                    <tr>
-                        <td>@repo.Name</td>
-                        <td>@repo.Description</td>
-                        <td>@repo.Username</td>
-                        <td>@repo.License</td>
-                    </tr>
+                        <tr>
+                            <td>@repo.Name</td>
+                            <td>@repo.Description</td>
+                            <td>@repo.Username</td>
+                            <td>@repo.License</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -43,7 +43,7 @@
     </Authorized>
     <Authorizing>Please wait...</Authorizing>
     <NotAuthorized>
-        Not Auth.
+        Not Authorized.
     </NotAuthorized>
 </AuthorizeView>
 
@@ -54,6 +54,7 @@
 
     private async void FindReposForUsernameElseSearchGithub()
     {
+
         if (username is null || username == "")
         {
             errorMessage = "Username not filled.";
@@ -64,8 +65,8 @@
             if (reposObj is null || reposObj.Count == 0)
             {
                 reposObj = await repoService.GetListStarredReposFromGithubAsync(username);
+                StateHasChanged();
             }
-            StateHasChanged();
         }
     }
 
