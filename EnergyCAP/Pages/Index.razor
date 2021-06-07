@@ -65,8 +65,8 @@
             if (reposObj is null || reposObj.Count == 0)
             {
                 reposObj = await repoService.GetListStarredReposFromGithubAsync(username);
-                StateHasChanged();
             }
+            StateHasChanged();
         }
     }
 
